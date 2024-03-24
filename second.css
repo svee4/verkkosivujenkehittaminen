@@ -1,0 +1,56 @@
+html {
+	background-image: url("./baget.jpg");
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	color: white;
+	height: 100%;
+}
+
+body {
+	backdrop-filter: brightness(20%);
+}
+
+h1 {
+	border: 1px solid lightgreen;
+	border-radius: 8px;
+	padding: 4px;
+}
+
+header {
+	display: flex;
+	align-items: center;
+	gap: 2em;
+}
+
+#nav a {
+	color: rgb(255, 211, 245);
+}
+
+.flags {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	place-items: center;
+}
+
+.revolution {
+	border-image: linear-gradient(
+			90deg,
+			rgba(8, 0, 143, 1) 0%,
+			rgba(8, 0, 143, 1) 32%,
+			rgba(255, 255, 255, 1) 33%,
+			rgba(255, 255, 255, 1) 66%,
+			rgba(255, 0, 0, 1) 67%,
+			rgba(255, 0, 0, 1) 100%
+		)
+		100;
+	border-width: 4px;
+	border-style: solid;
+	margin: 6px;
+	padding: 4px;
+}
+
+p {
+	background-color: rgba(144, 238, 144, 0.2);
+	border-radius: 10px;
+	padding: 6px;
+}

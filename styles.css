@@ -1,0 +1,39 @@
+/*
+
+    Set background color to black and text color to white.
+    Set h1-element font size to 20 pixels.
+    Set p-element font size to 12 pixels.
+    Set p-element text color to green.
+    Set div-element border to dotted and 2 pixels wide, set element width and height to 100 pixels. Use class selector.
+    Replace ordered list numbers with letters.
+    Replace unordered list dots with squares.
+
+*/
+
+html {
+	background-color: black;
+	color: white;
+}
+
+h1 {
+	font-size: 20px;
+}
+
+p {
+	font-size: 12px;
+	color: green;
+}
+
+.container {
+	border: 2px dotted lightgreen;
+	width: 100px;
+	height: 100px;
+}
+
+ol {
+	list-style-type: lower-alpha;
+}
+
+ul {
+	list-style-type: square;
+}

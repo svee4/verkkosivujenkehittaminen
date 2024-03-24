@@ -1,0 +1,16 @@
+* { 
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#nav {
+	display: flex;
+	gap: 2em;
+	border-bottom: 1px solid gray;
+	margin-bottom: 12px;
+	padding: 4px;
+	padding-bottom: 6px;
+}
+
+#nav a:is(:hover, :focus-visible) {
+	color: red;
+}

@@ -1,0 +1,45 @@
+
+body {
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+}  
+
+#nav {
+	background-color: rgba(173, 216, 230, 0.2);
+}
+
+#main {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	background-color: rgba(137, 43, 226, 0.2);
+}
+
+#left {
+	background-color: rgba(210, 105, 30, 0.2);
+}
+
+#left > * {
+	margin-top: 6px;
+	margin-bottom: 6px;
+	padding: 6px;
+}
+
+#left > *:nth-child(n) {
+	background-color: rgba(85, 107, 47, 0.4);
+}
+
+#left > *:nth-child(2n) {
+	background-color: rgba(0, 128, 0, 0.2);
+}
+
+#right {
+	background-color: rgba(188, 143, 143, 0.2);
+	padding: 12px;
+}
+
+
+#footer {
+	padding: 6px;
+	background-color: lightblue;
+}
