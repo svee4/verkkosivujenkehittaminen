@@ -1,104 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Document</title>
-		<link rel="stylesheet" href="./index.css" />
-		<link rel="stylesheet" href="./shared.css" /> 
-	</head>
-	<body>
-		<header id="header">
-			<h1>Welcome to my first web page 🇳🇱</h1>
-		</header>
-		<nav id="nav">
-			<a href="./index.html">Index</a>
-			<a href="./second.html">Second</a>
-			<a href="./third.html">Third</a>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Index</title>
+</head>
+<body>
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+			box-sizing: border-box;
+			font-family: cursive;
+			font-weight: 100;
+		}
+		body { 
+			display: flex;
+			justify-content: center;
+		}
+		main {
+			margin-top: 5%;
+		}
+		nav {
+			margin-top: 10%;
+			text-align: center;
+			padding: 24px;
+			border: 1px solid darkgray;
+			border-radius: 6px;
+		}
+
+		nav a {
+			padding: 6px;
+		}
+
+		nav a:is(:hover, :focus-visible) {
+			color: purple;
+		}
+	</style>
+	<main>
+		<h1>Verkkosivujen kehittäminen</h1>
+		<nav style="display: flex; flex-direction: column; gap: 12px;">
+			<a href="./first/">First assignments</a>
+			<a href="./bootstrap/">Bootstrapt assignment</a>
+			<a href="./estral/">Website project assignment</a>
 		</nav>
-		<main id="main">
-			<div id="left">
-				<section class="text">
-					<h2>CoreCLR: A Brief Overview</h2>
-					<p>
-						CoreCLR is the runtime component of .NET, a cross-platform, open-source framework for building modern, high-performance
-						applications. It's responsible for executing .NET applications, managing memory, handling exceptions, and providing other
-						essential runtime services.
-					</p>
-					<h3>Some benefits of CoreCLR are:</h3>
-					<ul>
-						<li>
-							<h4>Cross-platform Compatibility</h4>
-							<p>
-								CoreCLR is designed to work on multiple operating systems, including Windows, macOS, and various Linux distributions,
-								enabling developers to write and run .NET applications on different platforms.
-							</p>
-						</li>
-						<li>
-							<h4>High Performance</h4>
-							<p>
-								CoreCLR is optimized for performance, providing fast startup times and efficient execution of .NET applications. It
-								achieves this through various techniques such as just-in-time (JIT) compilation, ahead-of-time (AOT) compilation, and
-								aggressive optimization.
-							</p>
-						</li>
-						<li>
-							<h4>Memory Management</h4>
-							<p>
-								CoreCLR includes a garbage collector (GC) responsible for automatically reclaiming memory occupied by objects that are
-								no longer in use, thereby helping developers avoid memory leaks and manage memory efficiently.
-							</p>
-						</li>
-						<li>
-							<h4>Exception Handling</h4>
-							<p>
-								CoreCLR provides robust support for handling exceptions in .NET applications, allowing developers to write reliable
-								and resilient code that can gracefully handle errors and failures.
-							</p>
-						</li>
-						<li>
-							<h4>Security</h4>
-							<p>
-								CoreCLR includes features for enhancing the security of .NET applications, such as code access security, sandboxing,
-								and various security-related APIs for encryption, authentication, and authorization.
-							</p>
-						</li>
-						<li>
-							<h4>Integration with Visual Studio</h4>
-							<p>
-								CoreCLR seamlessly integrates with Visual Studio, Microsoft's integrated development environment (IDE), providing
-								developers with a rich set of tools and features for building, debugging, and deploying .NET applications.
-							</p>
-						</li>
-						<li>
-							<h4>Open Source</h4>
-							<p>
-								CoreCLR is open-source software, allowing developers to inspect its source code, contribute improvements, and
-								customize it to suit their specific requirements.
-							</p>
-						</li>
-					</ul>
-					<p>
-						Overall, CoreCLR plays a crucial role in the .NET ecosystem, providing a reliable and efficient runtime environment for
-						building modern, cross-platform applications.
-					</p>
-				</section>
-				<section>
-					<h3>The above textual content was written by ChatGPT</h3>
-					<p>
-						I asked ChatGPT to give me a rundown of the CoreCLR, and then I converted it to HTML. After auditing the text, I can say
-						it is factually correct, however it leaves out details and relevant information.
-					</p>
-				</section>
-			</div>
-			<aside id="right">
-				This is the aside tag, i can put ads here. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Mollitia est minima deserunt
-				voluptatum aliquam. Similique quia, quibusdam voluptatem quis earum perspiciatis porro vel illum magnam, nobis doloremque unde id
-				voluptates.
-			</aside>
-		</main>
-		<footer id="footer">
-			Footer
-		</footer>
-	</body>
+	</main>
+
+</body>
 </html>
