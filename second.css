@@ -16,11 +16,11 @@ h1 {
 	padding: 4px;
 }
 
-header {
+/* header {
 	display: flex;
 	align-items: center;
 	gap: 2em;
-}
+} */
 
 #nav a {
 	color: rgb(255, 211, 245);
