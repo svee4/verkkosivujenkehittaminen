@@ -21,12 +21,17 @@ main {
 	flex-grow: 1;
 }
 .preview {
+	position: relative;
+	flex-grow: 1;
 	display: grid;
 	place-items: center;
 	width: 100%;
 
 	& > img {
 		width: calc(100% - 4px);
+		height: 100%;
+		position: absolute;
+		object-fit: contain;
 	}
 }
 
