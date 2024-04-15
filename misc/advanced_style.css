@@ -1,0 +1,29 @@
+h1 {
+	text-shadow: 20px 10px 2px #d3d3d3
+}
+
+#box {
+	box-shadow: 15px 15px 19px 0px #CECECE;
+	width: 300px;
+	height: 200px;
+	border: 1px solid black;
+
+	background-image: url('./background.png');
+	background-size: cover;
+}
+
+a {
+	color: blue;
+	transition: color 1s ease;
+}
+
+a:hover {
+	color: red;
+}
+
+@media screen and (width < 800px) {
+	body {
+		background-color: black;
+		color: white;
+	}
+}
