@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/png" href="./favicon.png" />
+	<title>Log in</title>
+	<link rel="stylesheet" href="./global.css" />
+	<script src="./components.js"></script>
+</head>
+<body>
+	<header><header-content></header-content></header>
+	<main>
+		<style>
+			main {
+				margin-top: 24px;
+				display: flex;
+				flex-direction: column;
+				place-items: center;
+				gap: 1em;
+			}
+		</style>
+		<h1>Log in</h1>
+		<style>
+			form {
+				display: flex;
+				flex-direction: column;
+				gap: 1em;
+
+				& > * {
+					display: flex;
+					flex-direction: column;
+					gap: 0.1em;
+					& > input {
+						font-size: 1.1em;
+						padding: 2px;
+					}
+					& > button {
+						padding: 6px;
+						font-size: 1.1em;
+						background-color: #eee;
+
+						&:is(:hover, :focus-visible) {
+							background-color: color-mix(in srgb, lightblue, white 75%);
+						}
+					}
+ 				}
+			}
+		</style>
+		<form>
+			<div>
+				<label for="username">Username</label>
+				<input type="text" name="username" id="username" required />
+			</div>
+			<div>
+				<label for="password">Password</label>
+				<input type="password" name="password" id="password" required />
+			</div>
+			<div>
+				<button type="submit">Log in</button>
+			</div>
+		</form>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<p>
+				No account? 
+			</p>
+			<a href="./register.html">
+				Register here
+			</a>
+		</div>
+		<script type="module">
+			import { tryLogin, getUser } from "./auth.js";
+
+			const user = getUser();
+			if (user) {
+				alert(`Already logged in as ${user.username}`);
+				window.location.href = "./index.html";
+			}
+
+			const form = document.querySelector("form");
+			form.addEventListener("submit", ev => {
+				ev.preventDefault();
+				const data = new FormData(form);
+				const result = tryLogin(data.get("username"), data.get("password"));
+				switch (result) {
+					case "username": 
+						alert("Username does not exist");
+						break;
+					case "password":
+						alert("Incorrect password");
+						break;
+					default:
+						window.location.href = "./index.html";
+						break;
+				}
+				return false;
+			});
+		</script>
+	</main>
+</body>
+</html>

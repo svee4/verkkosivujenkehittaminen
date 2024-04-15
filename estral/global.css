@@ -31,8 +31,9 @@ header-content > div {
 	}
 
 	& > .hc-left {
-		padding: 0.8em;
+		padding-left: 0.8em;
 		display: flex;
+		align-items: center;
 		gap: 1em;
 
 		& nav > ul {

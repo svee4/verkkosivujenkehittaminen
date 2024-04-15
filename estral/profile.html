@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="./favicon.png"/>
+    <title>Profile</title>
+    <link rel="stylesheet" href="./global.css"/>
+    <script src="./components.js"></script>
+</head>
+<body>
+<header>
+    <header-content></header-content>
+</header>
+<main>
+    <h1>Profile</h1>
+    <div>
+        <h3>Username:</h3>
+        <p id="username"></p>
+        <button id="username-button" style="padding: 4px; margin-left: 10px;">Change</button>
+    </div>
+    <div style="flex-direction: column;">
+        <h3>Profile picture</h3>
+        <div>
+            <label for="profilepicture">Change:</label>
+            <input type="file" name="profilepicture" id="profilepicture" />
+        </div>
+        <p style="align-self: flex-start">Current:</p>
+        <img id="pfp" alt="Current profile picture" style="border: 1px solid lightgray; border-radius: 2px;" />
+    </div>
+</main>
+<script type="module">
+    import {getUser, changeUsername, setProfilePicture} from "./auth.js";
+
+    const user = getUser();
+
+    if (!user) {
+        alert("Log in to view your profile");
+        window.location.href = "./login.html";
+    }
+
+    const pfpImg = document.getElementById("pfp");
+
+    if (user.profilePicture) {
+        pfpImg.src = user.profilePicture;
+    } else {
+        pfpImg.alt = "No profile picture set";
+    }
+
+    document.getElementById("username").innerText = user.username;
+
+    document.getElementById("username-button").addEventListener("click", () => {
+        const newname = prompt("New username: ");
+        if (!newname) return;
+        changeUsername(newname);
+        window.location.reload();
+    });
+    
+    const pfp = document.getElementById("profilepicture")
+    pfp.addEventListener("change", async ev => {
+       const file = pfp.files[0];
+       if (!file) return;
+       
+       const reader = new FileReader();
+       let resolve;
+       const promise = new Promise(res => resolve = res);
+       reader.onload = ev2 => {
+           console.log(ev2.target.result);
+           resolve(ev2.target.result);
+       }
+       reader.readAsDataURL(file);
+       const result = await promise;
+       
+       if (!setProfilePicture(result)) {
+           alert("Profile picture change failed");
+       }
+        window.location.reload();
+    });
+    
+    
+    
+</script>
+<style>
+    main {
+        display: flex;
+        flex-direction: column;
+        place-items: center;
+        margin-top: 24px;
+        gap: 1.2em;
+
+        & > div {
+            display: flex;
+            place-items: center;
+            gap: 0.4em;
+        }
+    }
+</style>
+</body>
+</html>
