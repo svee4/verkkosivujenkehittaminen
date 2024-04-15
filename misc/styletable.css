@@ -1,0 +1,46 @@
+
+html {
+	background-color: rgb(237, 249, 252);
+}
+
+.table > table {
+	width: 800px;
+	
+	&, & th, & td {
+		border: 1px solid black;
+	}
+	& th, & td {
+		padding: 6px;
+	}
+}
+
+form {
+	display: grid; 
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	width: 800px;
+
+	& > :last-child {
+		grid-column: 1 / span 2;
+		display: flex;
+		justify-content: center;
+		& > * {
+			padding: 12px;
+		}
+	}
+
+	& > label {
+		display: flex;
+		flex-direction: column;
+	}
+
+	& > * {
+		border: 1px solid black;
+		margin: 0;
+		padding: 12px;
+	}
+
+	& textarea {
+		resize: vertical;
+	}
+
+}
