@@ -1,0 +1,108 @@
+main {
+	height: 100%;
+	display: flex;
+}
+
+
+.left, .right {
+	& > :first-child {
+		margin-top: 16px;
+	}
+	& > :last-child {
+		margin-bottom: 16px;
+	}
+}
+
+.left {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.2em;
+	flex-grow: 1;
+}
+.preview {
+	display: grid;
+	place-items: center;
+	width: 100%;
+
+	& > img {
+		width: calc(100% - 4px);
+	}
+}
+
+.right {
+	min-width: 35%;
+	border-left: 2px solid black;
+	display: flex;
+	flex-direction: column;
+	gap: 2em;
+	align-items: center;
+}
+
+.controls {
+	margin-top: 12px;
+	width: 95%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1em;
+	& > * {
+		width: 100%;
+	}
+}
+
+.file-select {
+	display: grid;
+	place-items: center;
+	gap: 0.25em;
+	& button {
+		background: #eee;
+		padding: 6px;
+		border-radius: 6px;
+		border: 6px solid lightblue;
+		cursor: pointer;
+		&:is(:hover, :focus-visible) {
+			border-color: color-mix(in hsl, lightblue, darkblue 20%);
+		}
+	}
+	& p {
+		font-size: 0.8em;
+	}
+}
+
+.texts {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	gap: 1em;
+
+	& input, textarea {
+		padding: 2px;
+		font-size: 1.1em;
+		width: 100%;
+		resize: vertical;
+	}
+}
+
+.upload > button {
+	background: #eee;
+	padding: 8px;
+	border-radius: 6px;
+	border: 6px solid lightblue;
+	font-size: 1.2em;
+	cursor: pointer;
+	&:is(:hover, :focus-visible) {
+		border-color: color-mix(in hsl, lightblue, darkblue 20%);
+	}
+}
+
+@media screen and (width <= 800px) {
+	main {
+		flex-direction: column;
+	}
+	.right {
+		border-left: none;
+		border-top: 2px solid black;
+		width: 100%;
+	}
+}
