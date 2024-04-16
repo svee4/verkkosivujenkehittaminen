@@ -7,6 +7,21 @@
     <title>Profile</title>
     <link rel="stylesheet" href="./global.css"/>
     <script src="./components.js"></script>
+    <style>
+        main {
+            display: flex;
+            flex-direction: column;
+            place-items: center;
+            margin-top: 24px;
+            gap: 1.2em;
+
+            & > div {
+                display: flex;
+                place-items: center;
+                gap: 0.4em;
+            }
+        }
+    </style>
 </head>
 <body>
 <header>
@@ -26,7 +41,7 @@
             <input type="file" name="profilepicture" id="profilepicture" />
         </div>
         <p style="align-self: flex-start">Current:</p>
-        <img id="pfp" alt="Current profile picture" style="border: 1px solid lightgray; border-radius: 2px;" />
+        <img id="pfp" src="" alt="Current profile picture" style="border: 1px solid lightgray; border-radius: 2px;" />
     </div>
 </main>
 <script type="module">
@@ -76,24 +91,6 @@
        }
         window.location.reload();
     });
-    
-    
-    
 </script>
-<style>
-    main {
-        display: flex;
-        flex-direction: column;
-        place-items: center;
-        margin-top: 24px;
-        gap: 1.2em;
-
-        & > div {
-            display: flex;
-            place-items: center;
-            gap: 0.4em;
-        }
-    }
-</style>
 </body>
 </html>

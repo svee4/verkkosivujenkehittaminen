@@ -7,6 +7,51 @@
     <title>Item</title>
     <link rel="stylesheet" href="./global.css"/>
     <script src="./components.js"></script>
+    <style>
+        main {
+            padding: 0.5em 1em;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+        }
+        .info {
+            word-wrap: anywhere;
+        }
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            & button {
+                padding: 5px;
+                font-size: 1em;
+                background-color: color-mix(in srgb, lightgray, white 80%);
+                border: 2px solid gray;
+                cursor: pointer;
+
+                &:is(:hover, :focus-visible) {
+                    background-color: color-mix(in srgb, lightgray, white 65%);
+                    border-color: black;
+                }
+            }
+        }
+        .image-container {
+            flex-grow: 1;
+            align-self: center;
+            margin-bottom: 2px;
+            display: flex;
+            justify-content: center;
+            position: relative;
+            width: calc(100% - 4px);
+
+            & img {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+        }
+    </style>
 </head>
 <body>
 <header>
@@ -28,51 +73,6 @@
         <img src="" alt="No image found" id="image" />
     </div>
 </main>
-<style>
-    main {
-        padding: 0.5em 1em;
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-        gap: 1em;
-    }
-    .info {
-        word-wrap: anywhere;
-    }
-    .buttons {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        & button {
-            padding: 5px;
-            font-size: 1em;
-            background-color: color-mix(in srgb, lightgray, white 80%);
-            border: 2px solid gray;
-            cursor: pointer;
-            
-            &:is(:hover, :focus-visible) {
-                background-color: color-mix(in srgb, lightgray, white 65%);
-                border-color: black;
-            }
-        }
-    }
-    .image-container {
-        flex-grow: 1;
-        align-self: center;
-        margin-bottom: 2px;
-        display: flex;
-        justify-content: center;
-        position: relative;
-        width: calc(100% - 4px);
-        
-        & img {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-    }
-</style>
 <script type="module">
     import { getLocalImageData, getUser, deleteImage } from "./auth.js";
     const id = new URLSearchParams(window.location.search).get("id");
