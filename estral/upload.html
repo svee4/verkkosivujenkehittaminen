@@ -17,30 +17,104 @@
     <div class="left">
         <p>Preview</p>
         <div class="preview">
-            <img src="./preview.png" alt="Preview of image"/>
+            <img style="border: 1px solid lightgray;" alt="Preview of image" id="preview"/>
         </div>
     </div>
-    <div class="right">
+    <form class="right">
         <div class="controls">
             <div class="file-select">
-                <button>Select file</button>
-                <p>selectedfile.png</p>
+                <label for="file" style="padding: 3px; border: 5px solid lightgray; border-radius: 6px;">Select file</label>
+                <div style="display: flex; gap: 0.25em;">
+                    <input type="file" id="file" name="file" onchange="this.nextElementSibling.disabled = this.files.length === 0" required />
+                    <button type="button" disabled 
+                            onclick="this.previousElementSibling.value = ''; this.previousElementSibling.dispatchEvent(new Event('change'))" 
+                            aria-label="Remove file" style="width: 24px; height: 24px;">X</button>
+                </div>
             </div>
             <div class="texts">
                 <div class="name-container">
-                    <p id="name-input-label">Name</p>
-                    <input aria-labelledby="name-input-label" type="text" placeholder="placeholder" name="name"/>
+                    <label for="title">Title</label>
+                    <input type="text" placeholder="placeholder" name="title" id="title" maxlength="50" required />
                 </div>
                 <div class="description-container">
-                    <p id="description-input-label">Description</p>
-                    <textarea aria-labelledby="description-input-label" placeholder="placeholder" name="description"></textarea>
+                    <label for="description" id="description-input-label">Description</label>
+                    <textarea placeholder="placeholder" name="description" id="description" maxlength="200"></textarea>
                 </div>
             </div>
         </div>
         <div class="upload">
-            <button>Upload</button>
+            <button type="submit">Upload</button>
         </div>
-    </div>
+        <script type="module">
+            import {getUser, uploadImage} from "./auth.js";
+
+            const user = getUser();
+
+            if (!user) {
+                alert("Log in to upload");
+                window.location.href = "./login.html";
+            }
+
+            const form = document.querySelector("form");
+            const fileInput = document.getElementById("file");
+            const preview = document.getElementById("preview");
+            let base64url;
+
+            fileInput.addEventListener("change", async _ => {
+                // no guarantees for the event parameter because it can be raised from the X button which passes an empty event
+                const file = fileInput.files[0];
+                if (!file) {
+                    base64url = "";
+                    preview.src = "";
+                    return;
+                }
+
+                let resolve;
+                const promise = new Promise(res => resolve = res);
+                const reader = new FileReader();
+                reader.onload = ev2 => resolve(ev2.target.result);
+                reader.readAsDataURL(file);
+                
+                base64url = await promise;
+                preview.src = base64url;
+            });
+            
+            form.addEventListener("submit", ev => {
+                ev.preventDefault();
+                
+                if (!base64url) {
+                    alert("Invalid base64url");
+                    return;
+                }
+                
+                const data = new FormData(form);
+                const result = uploadImage({
+                    title: data.get("title"),
+                    description: data.get("description"),
+                    base64url
+                });
+                
+                switch (result) {
+                    case "unauthenticated": 
+                        alert("Not authenticated; please log in");
+                        break;
+                    case "title": 
+                        alert("Invalid title");
+                        break;
+                    case "url":
+                        alert("Invalid bae64url");
+                        break;
+                    case "dupetitle": 
+                        alert("An upload by the same user with the same title already exists; please change title");
+                        break;
+                    default: 
+                        window.location.href = "./item.html?id=" + encodeURIComponent(result);
+                }
+                
+                return false;
+            });
+        </script>
+    </form>
 </main>
 </body>
 </html>

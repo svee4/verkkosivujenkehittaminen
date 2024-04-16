@@ -8,9 +8,9 @@ window.customElements.define("header-content", class extends HTMLElement {
 		const prefix = "hc";
 		container.innerHTML = `
 <div class="${prefix}-left">
-	<div>
+	<a href="./index.html">
 		<img src="./favicon.png" alt="Page icon" style="height: 36px;" />
-	</div>
+	</a>
 	<nav>
 		<ul>
 			<li><a href="./search.html">Search</a></li>

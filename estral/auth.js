@@ -8,7 +8,15 @@
 
 /**
  * Key is username
- * @typedef {{string: UserData}} LocalData
+ * @typedef {{string: UserData}} LocalUserData
+ */
+
+/**
+ * @typedef {{username: string; title: string; description: string; base64url: string; id: string;}} ImageData
+ */
+
+/**
+ * @typedef {ImageData[]} LocalImageData
  */
 
 /**
@@ -18,8 +26,8 @@
 export const getUser = () => {
 	const currentuser = localStorage["currentuser"];
 	if (!currentuser) return null;
-	const localdata = getLocalData();
-	const data = localdata[currentuser];
+	const localUserData = getLocalUserData();
+	const data = localUserData[currentuser];
 	if (!data) return null;
 	return data;
 }
@@ -36,8 +44,8 @@ export const isLoggedIn = () => {
  * @returns {"username" | "password" | UserData} 
  */
 export const tryLogin = (/** @type {string} */ username, /** @type {string} */ password) => {
-	const data = getLocalData();
-	const userdata = data[username];
+	const localUserData = getLocalUserData();
+	const userdata = localUserData[username];
 	if (!userdata) return "username";
 	if (password !== userdata.password) return "password";
 	localStorage["currentuser"] = username;
@@ -53,8 +61,8 @@ export const tryLogin = (/** @type {string} */ username, /** @type {string} */ p
  */
 export const tryRegister = (/** @type {string} */ username, /** @type {string} */ password) => {
 	if (!username || !password) return "badparams";
-	if (tryLogin(username, password) !== "username") {
-		// already exists
+	const localUserData = getLocalUserData();
+	if (localUserData[username]) {
 		return "exists";
 	}
 	const data = /** @type {UserData} */ {
@@ -70,7 +78,7 @@ export const tryRegister = (/** @type {string} */ username, /** @type {string} *
  * @returns {"exists"|null}
  */
 export const changeUsername = (/** @type {string} */ username) => {
-	const exists = !!getLocalData()[username];
+	const exists = !!getLocalUserData()[username];
 	if (exists) return "exists";
 	const data = getUser();
 	if (!data) throw new Error("Tried to change username without being logged in");
@@ -94,31 +102,72 @@ export const logout = () => {
 	localStorage.removeItem("currentuser");
 }
 
-/** @returns {LocalData} */
-const getLocalData = () => {
-	const str = localStorage["localdata"];
-	return str ? JSON.parse(str) : /** @type {LocalData} */ {};
+
+/**
+ * 
+ * @returns {LocalImageData}
+ */
+export const getLocalImageData = () => {
+	const str = localStorage["localimagedata"]
+	return str ? JSON.parse(str) : [];
 }
 
-const setLocalData = (/** @type {LocalData} */ data) => {
-	localStorage["localdata"] = JSON.stringify(data);
+const setLocalImageData = (/** @type {LocalImageData} */ data) => {
+	localStorage["localimagedata"] = JSON.stringify(data);
+}
+
+/**
+ * Returns a string representing the error reason, or the generated id if successful
+ * @param {{title: string; description: string?; base64url: string}} params
+ * @returns {"unauthenticated"|"title"|"url"|"dupetitle"|"string"}
+ */
+export const uploadImage = (params) => {
+	if (!isLoggedIn()) return "unauthenticated";
+	if (!params.title) return "title";
+	if (!params.base64url) return "url";
+	params.description ??= "";
+	
+	const data = /** @type {ImageData} */ { ...params, username: getUser().username };
+	const existing = getLocalImageData();
+
+	if (existing.some(ex => ex.username === data.username && ex.title === data.title))
+		return "dupetitle";
+
+	do {
+		data.id = crypto.randomUUID();
+	} while (existing.some(ex => ex.id === data.id));
+	
+	existing.push(data);
+	setLocalImageData(existing);
+	return data.id;
+}
+
+
+/** @returns {LocalUserData} */
+const getLocalUserData = () => {
+	const str = localStorage["localuserdata"];
+	return str ? JSON.parse(str) : /** @type {LocalUserData} */ {};
+}
+
+const setLocalUserData = (/** @type {LocalUserData} */ data) => {
+	localStorage["localuserdata"] = JSON.stringify(data);
 }
 
 const setUserData = (/** @type {UserData} */ userdata) => {
-	const data = getLocalData();
+	const data = getLocalUserData();
 	if (data[userdata.username]) {
 		data[userdata.username] = { ...data[userdata.username], ...userdata };
 	}
 	else {
 		data[userdata.username] = userdata;
 	}
-	setLocalData(data);
+	setLocalUserData(data);
 }
 
 const removeUserData = (username) => {
-	const data = getLocalData();
+	const data = getLocalUserData();
 	if (data[username]) {
 		delete data[username];
 	}
-	setLocalData(data);
+	setLocalUserData(data);
 }

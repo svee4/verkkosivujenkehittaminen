@@ -16,10 +16,17 @@
     <h1>Website name</h1>
     <h2>Upload and share images and videos</h2>
     <div style>
-        <h3><a href="./login.html">Log in to upload</a></h3>
+        <h3><a href="./login.html" id="link">Log in to upload</a></h3>
         <p>or</p>
         <h3><a href="./search.html">Explore</a></h3>
     </div>
+    <script type="module">
+        import {isLoggedIn} from "./auth.js";
+        if (isLoggedIn) {
+            document.getElementById("link").innerText = "Upload";
+            document.getElementById("link").href = "./upload.html";
+        }
+    </script>
 </main>
 <style>
     main {

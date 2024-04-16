@@ -60,19 +60,6 @@ main {
 	display: grid;
 	place-items: center;
 	gap: 0.25em;
-	& button {
-		background: #eee;
-		padding: 6px;
-		border-radius: 6px;
-		border: 6px solid lightblue;
-		cursor: pointer;
-		&:is(:hover, :focus-visible) {
-			border-color: color-mix(in hsl, lightblue, darkblue 20%);
-		}
-	}
-	& p {
-		font-size: 0.8em;
-	}
 }
 
 .texts {
