@@ -85,6 +85,8 @@ export const changeUsername = (/** @type {string} */ username) => {
 	
 	// remove old data
 	removeUserData(data.username);
+	// change username for images
+	setLocalImageData(getLocalImageData().map(item => item.username !== data.username ? item : {...item, username}));
 	data.username = username;
 	setUserData(data);
 	tryLogin(username, data.password);
@@ -142,6 +144,20 @@ export const uploadImage = (params) => {
 	return data.id;
 }
 
+/**
+ * Returns string describing error, or null if successful
+ * @param id
+ * @returns {"badid"|"wronguser"|null}
+ */
+export const deleteImage = (/** @type {string} */ id) => {
+	const data = getLocalImageData();
+	const image = data.find(item => item.id === id);
+	if (!image) return "badid";
+	if (image.username !== getUser().username) return "wronguser";
+	const newdata = data.filter(item => item.id !== id);
+	setLocalImageData(newdata);
+	return null;
+}
 
 /** @returns {LocalUserData} */
 const getLocalUserData = () => {

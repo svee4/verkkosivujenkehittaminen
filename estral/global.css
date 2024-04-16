@@ -15,6 +15,11 @@ body {
 	flex-direction: column;
 }
 
+button {
+	/* ios things */
+	color: black;
+}
+
 header-content > div {
 	display: flex;
 	justify-content: space-between;

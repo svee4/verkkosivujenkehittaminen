@@ -13,10 +13,16 @@
     <header-content></header-content>
 </header>
 <main>
-    <div class="info">
-        <h1 id="title"></h1>
-        <h3 id="username"></h3>
-        <p id="description"></p>
+    <div class="header" style="display: flex; justify-content: space-between;">
+        <div class="info">
+            <h1 id="title"></h1>
+            <h3 id="username"></h3>
+            <p id="description"></p>
+            <p id="size"></p>
+        </div>
+        <div class="buttons">
+            <button id="delete" style="display: none;">Delete</button>
+        </div>
     </div>
     <div class="image-container">
         <img src="" alt="No image found" id="image" />
@@ -32,6 +38,23 @@
     }
     .info {
         word-wrap: anywhere;
+    }
+    .buttons {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        & button {
+            padding: 5px;
+            font-size: 1em;
+            background-color: color-mix(in srgb, lightgray, white 80%);
+            border: 2px solid gray;
+            cursor: pointer;
+            
+            &:is(:hover, :focus-visible) {
+                background-color: color-mix(in srgb, lightgray, white 65%);
+                border-color: black;
+            }
+        }
     }
     .image-container {
         flex-grow: 1;
@@ -51,14 +74,15 @@
     }
 </style>
 <script type="module">
-    import { getLocalImageData } from "./auth.js";
+    import { getLocalImageData, getUser, deleteImage } from "./auth.js";
     const id = new URLSearchParams(window.location.search).get("id");
     
     const els = {
         title: document.getElementById("title"),
         username: document.getElementById("username"),
         description: document.getElementById("description"),
-        image: document.getElementById("image")
+        image: document.getElementById("image"),
+        del: document.getElementById("delete")
     };
 
     if (!id) {
@@ -76,7 +100,35 @@
     els.username.innerText = data.username;
     els.description.innerText = data.description;
     els.image.src = data.base64url;
+    els.image.alt = data.title;
     
+    if (data.username === getUser()?.username) {
+        els.del.style.display = "";
+        els.del.addEventListener("click", () => {
+           if (!confirm("Are you sure you want to delete this image?")) return;
+           const result = deleteImage(data.id);
+           switch (result) {
+               case "badid": 
+                   alert("Image for id not found");
+                   break;
+               case "wronguser":
+                   alert("Cannot delete someone else's image");
+                   break;
+               case null:
+                   alert("Succesfully deleted image");
+                   window.location.href = "./search.html";
+                   break;
+           }
+        });
+    }
+
+    const sizeb = data.base64url.length * 2;
+    let size;
+    if (sizeb < 1000) size = `${sizeb}B`;
+    else if (sizeb < 1_000_000) size = `${Math.round(sizeb / 1000)}kB`;
+    else size = `${Math.round(sizeb / 1_000_000)}MB`;
+    document.getElementById("size").innerText = `Size: ${size}`;
+
 </script>
 </body>
 </html>
